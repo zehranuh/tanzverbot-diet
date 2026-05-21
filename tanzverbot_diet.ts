@@ -18,6 +18,13 @@ const foods = [
   { name: "Mini Babybel", caloriesPerServing: 59, servings: 20 },
 ];
 
+function calcBasicMetabolicRate(weightKg: number, heightM: number, ageY: number, sex: Sex): number {
+  if (sex === Sex.Male) {
+    return Math.ceil(66.47 + 13.7 * weightKg + 5.003 * heightM * 100 - 6.75 * ageY);
+  }
+  return Math.ceil(655.1 + 9.563 * weightKg + 1.85 * heightM * 100 - 4.676 * ageY);
+}
+
 export function calcDateOnDiet(
   currentWeightKg: number,
   targetWeightKg: number,
@@ -36,18 +43,9 @@ export function calcDateOnDiet(
   for (const food of foods) {
     dailyCaloriesOnDiet += food.caloriesPerServing * food.servings;
   }
-  let dailyCaloriesBasicMetabolicRate = 0;
-  if (sex == Sex.Male) {
-    dailyCaloriesBasicMetabolicRate = Math.ceil(
-      // Harris-Benedict-Formula (Male)
-      66.47 + 13.7 * currentWeightKg + 5.003 * heightM * 100.0 - 6.75 * ageY,
-    );
-  } else {
-    dailyCaloriesBasicMetabolicRate = Math.ceil(
-      // Harris-Benedict-Formula (Female)
-      655.1 + 9.563 * currentWeightKg + 1.85 * heightM * 100.0 - 4.676 * ageY,
-    );
-  }
+  
+  const dailyCaloriesBasicMetabolicRate = calcBasicMetabolicRate(currentWeightKg, heightM, ageY, sex);
+  
   const dailyExcessCalories =
     dailyCaloriesOnDiet - dailyCaloriesBasicMetabolicRate;
   if (dailyExcessCalories <= 0) {
