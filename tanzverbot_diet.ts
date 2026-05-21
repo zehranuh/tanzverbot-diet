@@ -3,6 +3,8 @@ export enum Sex {
   Female = "f",
 }
 
+const CALORIES_PER_KG_WEIGHT_GAIN = 9000;
+
 const foods = [
   { name: "Kellogg's Tresor", caloriesPerServing: 137, servings: 4 },
   { name: "Weihenstephan Haltbare Milch", caloriesPerServing: 64, servings: 8 },
@@ -51,5 +53,7 @@ export function calcDateOnDiet(
   if (dailyExcessCalories <= 0) {
     throw new Error("This diet is not sufficient for you to gain weight.");
   }
-  return Math.ceil((9000 * weightGainKg) / dailyExcessCalories);
+  return Math.ceil(
+    (CALORIES_PER_KG_WEIGHT_GAIN * weightGainKg) / dailyExcessCalories,
+  );
 }
