@@ -27,7 +27,7 @@ export function calcDateOnDiet(
 ): number {
   const weightGainKg = targetWeightKg - currentWeightKg;
   if (weightGainKg < 0) {
-    throw new Error(`This diet is for gaining weight, not loosing it!`);
+    throw new Error(`This diet is for gaining weight, not losing it!`);
   }
   if (ageY < 16 || heightM < 1.5) {
     throw new Error(`You do not qualify for this kind of diet.`);
